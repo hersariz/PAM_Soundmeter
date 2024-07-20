@@ -1,0 +1,69 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'it.albertopasqualetto.soundmeteresp'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "it.albertopasqualetto.soundmeteresp"
+        minSdk 26
+        //noinspection OldTargetApi since my main device is API 31
+        targetSdk 31
+        versionCode 2
+        versionName "1.1"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug  // custom signingConfigs should be added
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.7'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.activity:activity-compose:1.7.2'
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation "androidx.compose.material3:material3:$compose_material3_version"
+    implementation "androidx.compose.material:material-icons-extended:1.4.3"    // unused icons will be removed by proguard on release build
+    implementation "androidx.compose.material3:material3-window-size-class:$compose_material3_version"  // for getting screen height
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'   // chart library
+    implementation "com.google.accompanist:accompanist-permissions:0.30.1"  // permissions handling in Compose library
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+}
